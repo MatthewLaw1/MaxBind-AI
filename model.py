@@ -4,6 +4,17 @@ from transformers import RobertaModel, RobertaTokenizer
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
+class ObservableActivation(nn.Module):
+    """A wrapper for activation functions to observe their outputs."""
+    def __init__(self, activation):
+        super().__init__()
+        self.activation = activation
+        self.outputs = None
+
+    def forward(self, x):
+        self.outputs = self.activation(x)
+        return self.outputs
+
 class SmilesEncoder(nn.Module):
     def __init__(self, embedding_dim=256):
         super().__init__()
@@ -20,11 +31,11 @@ class SmilesEncoder(nn.Module):
         
         self.pool = nn.AdaptiveAvgPool1d(1)
         self.dropout = nn.Dropout(0.1)
-        self.activation = nn.ReLU()
+        self.activation = ObservableActivation(nn.ReLU())
 
     def forward(self, x):
         # x shape: (batch_size, seq_len, 256)
-        x = x.transpose(1, 2)  # (batch_size, 256, seq_len)
+        x = x.transpose(1, 2).to(x.device)  # Ensure tensor is on the correct device
         
         x = self.activation(self.norm1(self.conv1(x)))
         x = self.dropout(x)
@@ -132,7 +143,7 @@ def process_smiles(smiles):
     """Convert SMILES to molecular fingerprint tensor"""
     mol = Chem.MolFromSmiles(smiles)
     fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=2048)
-    return torch.tensor(list(fp))
+    return torch.tensor(list(fp)).to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
 def prepare_batch(binding_sites, ligands, features, device):
     """Prepare a batch of data for the model"""
@@ -141,10 +152,10 @@ def prepare_batch(binding_sites, ligands, features, device):
     ligand_fps = torch.stack([process_smiles(s) for s in ligands])
     
     # Convert features to tensor
-    features = torch.tensor(features)
+    features = torch.tensor(features).to(device)
     
     return (
         binding_fps.to(device),
         ligand_fps.to(device),
-        features.to(device)
+        features
     )
