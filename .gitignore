@@ -1,0 +1,43 @@
+# General
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env/
+.venv/
+*.pyc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Large data files
+Data/merged_outputs_not_processed.csv
+Data/merged_output.csv
+data/merged_outputs_not_processed.csv
+data/merged_output.csv
