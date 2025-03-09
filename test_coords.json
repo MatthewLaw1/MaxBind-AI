@@ -1,0 +1,55 @@
+{
+    "A0A0H2UPP7": {
+        "entry_pdb_id": "3mms",
+        "ligand_interacting_residues": "['1.A_108_107' '1.A_118_117' '1.A_117_116']",
+        "binding_site_coordinates": [
+            {
+                "resname": "TYR",
+                "resseq": 118,
+                "atom_name": "N",
+                "x": -21.711,
+                "y": -108.818,
+                "z": -4.428
+            },
+            {
+                "resname": "TYR",
+                "resseq": 118,
+                "atom_name": "CA",
+                "x": -22.042,
+                "y": -109.303,
+                "z": -5.764
+            },
+                        {
+                "resname": "HOH",
+                "resseq": 2,
+                "atom_name": "O",
+                "x": -18.622,
+                "y": -108.859,
+                "z": -3.792
+            },
+            {
+                "resname": "HOH",
+                "resseq": 3,
+                "atom_name": "O",
+                "x": -18.295,
+                "y": -105.149,
+                "z": 1.881
+            }
+                    ],
+        "split": "train",
+        "ligands": [
+            {
+                "ligand_smiles": "CSCC1CN(Cc2c[nH]c3c(N)ncnc23)C1",
+                "affinity": 7.08
+            },
+            {
+                "ligand_smiles": "CSCC1(CO)CN(Cc2c[nH]c3c(N)ncnc23)C1",
+                "affinity": 6.82
+            },
+            {
+                "ligand_smiles": "CSC[C@H]1CN(Cc2c[nH]c3c(N)ncnc23)C[C@@H]1O",
+                "affinity": 7.62
+            }
+        ]
+    }
+}
